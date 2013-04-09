@@ -1,0 +1,50 @@
+<html>
+<head>
+  <link rel="stylesheet" href="//x.scraperwiki.com/vendor/style/bootstrap.min.css">
+  <link rel="stylesheet" href="//x.scraperwiki.com/vendor/style/metro.bootstrap.css">
+</head>
+<body>
+  <p style="margin: 10px">
+    <button class="btn" id="redirectInternal">Internal Redirect</button>
+    <button class="btn" id="redirectExternal">External Redirect</button>
+    <button class="btn" id="showURL">Show URL</button>
+    <button class="btn" id="rename">Rename</button>
+    <button class="btn" id="alert">Show alert</button>
+    <button class="btn" id="sqlmetadata">Get SQL metadata</button>
+    <button class="btn" id="sqlpush">SQL push</button>
+  </p>
+  <p id="textURL" style="margin: 10px;">Outer URL will appear here</p>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+  <script src="//x.scraperwiki.com/vendor/js/bootstrap.min.js"></script>
+  <script src="//x-dev.scraperwiki.com/js/scraperwiki.js"></script>
+  <script type="text/javascript">
+  $('#redirectInternal').on('click', function(){
+    scraperwiki.tool.redirect('/')
+  })
+  $('#redirectExternal').on('click', function(){
+    scraperwiki.tool.redirect('http://www.google.com/robots.txt')
+  })
+  $('#showURL').on('click', function(){
+    scraperwiki.tool.getURL(function(url){
+      $('#textURL').text(url)
+    })
+  })
+  $('#rename').on('click', function(){
+    scraperwiki.tool.rename('Test Dataset (renamed)')
+  })
+  $('#alert').on('click', function(){
+    scraperwiki.alert('You have won!', '<a href="#">Click here</a> to claim your prize! OMG!!1!1')
+  })
+  $('#sqlmetadata').on('click', function(){
+      scraperwiki.exec("rm ~/scraperwiki.sqlite;sqlite3 scraperwiki.sqlite 'CREATE TABLE SurLeTable (a, b, c); CREATE VIEW VoirLeLapin AS SELECT 1;'").success(function() {
+        scraperwiki.sql.meta(function(obj){
+          $('body').append('<p id="sqlMetaDataText">' + JSON.stringify(obj) + '</p>');
+        })
+     })
+  })
+  $('#sqlpush').on('click', function(){
+    scraperwiki.tool.pushSql('SELECT 1', 'test-push')
+  })
+  </script>
+</body>
+</html>

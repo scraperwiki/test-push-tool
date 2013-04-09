@@ -1,0 +1,5 @@
+{
+  "displayName": "Test Push",
+  "gitUrl": "https://github.com/scraperwiki/test-push-tool.git",
+  "description": "Test that we get the right SQL query from the push RPC"
+}
